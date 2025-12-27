@@ -813,16 +813,150 @@ section {
     z-index: 2;
 }
 
-/* Responsive adjustments */
-@media (max-width: 992px) {
+/* ===== Mobile-First Responsive Design ===== */
+
+/* Base styles (mobile first) */
+.container {
+    width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+/* Navigation */
+.navbar {
+    padding: 15px 0;
+}
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.nav-links {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: var(--white);
+    flex-direction: column;
+    padding: 80px 20px 40px;
+    transition: all 0.3s ease-in-out;
+    z-index: 999;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+}
+
+.nav-links.active {
+    right: 0;
+    display: flex;
+}
+
+.nav-link {
+    padding: 12px 0;
+    margin: 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* Hero Section */
+.hero {
+    padding: 100px 0 60px;
+}
+
+.hero-content h1 {
+    font-size: 2rem;
+    line-height: 1.3;
+}
+
+.hero-content p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+/* Team Section */
+.team-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.team-member {
+    max-width: 100%;
+}
+
+/* Contact Form */
+.contact-form {
+    padding: 20px;
+}
+
+/* Tablet and larger */
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+    
+    .hero {
+        padding: 140px 0 80px;
+    }
+    
     .hero-content h1 {
         font-size: 2.5rem;
     }
+    
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-@media (max-width: 768px) {
+/* Desktop */
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+    
+    .hamburger {
+        display: none;
+    }
+    
+    .nav-links {
+        position: static;
+        display: flex;
+        flex-direction: row;
+        width: auto;
+        height: auto;
+        background: transparent;
+        padding: 0;
+        box-shadow: none;
+    }
+    
+    .nav-link {
+        padding: 10px 15px;
+        margin: 0 5px;
+        border: none;
+    }
+    
     .hero-content h1 {
-        font-size: 2rem;
+        font-size: 3rem;
+    }
+    
+    .team-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+    
+    .hero-content h1 {
+        font-size: 3.5rem;
     }
 }
 

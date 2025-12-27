@@ -3,21 +3,58 @@ document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
     const navLinksItems = document.querySelectorAll('.nav-links a');
+    const body = document.body;
     
-    hamburger.addEventListener('click', function() {
-        this.classList.toggle('active');
+    // Toggle mobile menu
+    function toggleMenu() {
+        hamburger.classList.toggle('active');
         navLinks.classList.toggle('active');
-        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
-    });
+        body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+    }
     
-    // Close mobile menu when clicking on a nav link
+    // Toggle menu on hamburger click
+    hamburger.addEventListener('click', toggleMenu);
+    
+    // Close menu when clicking on a nav link
     navLinksItems.forEach(link => {
         link.addEventListener('click', function() {
             hamburger.classList.remove('active');
             navLinks.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            body.style.overflow = 'auto';
+            
+            // Smooth scroll to section
+            const targetId = this.getAttribute('href');
+            if (targetId.startsWith('#')) {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            }
         });
     });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.nav-links') && !event.target.closest('.hamburger')) {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+            body.style.overflow = 'auto';
+        }
+    });
+    
+    // Close menu on window resize if it becomes desktop view
+    function handleResize() {
+        if (window.innerWidth >= 992) {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+            body.style.overflow = 'auto';
+        }
+    }
+    
+    window.addEventListener('resize', handleResize);
     
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
