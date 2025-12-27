@@ -78,11 +78,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Navbar scroll effect
+    // Navbar scroll effect - only for desktop
     const navbar = document.querySelector('.navbar');
     let lastScroll = 0;
     
-    window.addEventListener('scroll', function() {
+    function handleScroll() {
+        // Don't apply scroll effects on mobile
+        if (window.innerWidth <= 992) {
+            navbar.style.transform = 'translateY(0)';
+            return;
+        }
+        
         const currentScroll = window.pageYOffset;
         
         // Add/remove scrolled class based on scroll position
@@ -92,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
             navbar.classList.remove('scrolled');
         }
         
-        // Hide/show navbar on scroll
+        // Hide/show navbar on scroll (desktop only)
         if (currentScroll > lastScroll && currentScroll > 200) {
             navbar.style.transform = 'translateY(-100%)';
         } else {
@@ -100,6 +106,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         lastScroll = currentScroll;
+    }
+    
+    // Initial check
+    handleScroll();
+    
+    // Add scroll and resize event listeners
+    window.addEventListener('scroll', handleScroll);
         
         // Show/hide back to top button
         const backToTop = document.querySelector('.back-to-top');
